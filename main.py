@@ -121,7 +121,7 @@ if submit_button or st.session_state.scrape_state and linkurl != "":
     df = df.transpose()
 
     gd = GridOptionsBuilder.from_dataframe(df)
-    gd.configure_pagination(enabled=True, paginationPageSize=20)
+    gd.configure_pagination(enabled=True, paginationPageSize=20, paginationAutoPageSize=False)
     gridoption = gd.build()
     AgGrid(df, gridOptions=gridoption)
 
