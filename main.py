@@ -6,7 +6,6 @@ import pandas as pd
 import streamlit as st
 import httpx
 import io
-import pyperclip
 import re
 
 st.set_page_config(
@@ -51,19 +50,19 @@ with st.expander("⚠️ Tutorial Penggunaan"):
         """
         **NOTE:** \n
         Website ini hanya bisa scraping data pada Google Scholar. Data penulis
-        yang dapat diambil hanya 7 penulis. Jika lebih maka sistem akan error.  
+        yang dapat diambil hanya 7 penulis. Jika lebih maka sistem akan error.
+        \n
+        📢 Untuk mengambil seluruh data penelitian lengkap yang lebih dari 20 halaman. Silahkan copy
+        text dibawah ini dan letakkkan dipaling akhir setelah url.  
         """
         )
     
-    st.write(
+    st.success(
         """
-        📢 Untuk mengambil seluruh data penelitian lengkap yang lebih dari 20 halaman. Tekan tombol
-        dibawah ini untuk meng-copy text dan letakkkan dipaling akhir.
+        &cstart=0&pagesize=500
         """
         )
-    if st.button("📜 Copy"):
-        pyperclip.copy("&cstart=0&pagesize=500")
-        st.success("✅ Text Berhasil Di Copy")
+    
 
 with st.form("myform"):
     penulis = st.text_input("Penulis", placeholder="Masukkan Nama Penulis")
@@ -113,7 +112,7 @@ if submit_button or st.session_state.scrape_state and linkurl != "":
 
     gd = GridOptionsBuilder.from_dataframe(df)
     gd.configure_pagination(enabled=True)
-    gd.configure_default_column(editable=True, resizable=True)
+    gd.configure_default_column(editable=True)
     gridoption = gd.build()
     AgGrid(df, gridOptions=gridoption)
 

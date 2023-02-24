@@ -5,5 +5,4 @@ beautifulsoup4
 openpyxl
 httpx
 pandas
-pyperclip
 XlsxWriter
