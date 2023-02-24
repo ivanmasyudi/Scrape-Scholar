@@ -48,31 +48,37 @@ st.title("🔎 Scraping Google Scholar")
 with st.expander("⚠️ Tutorial Penggunaan"):
     st.warning(
         """
-        **NOTE:** \n
+        ❗️**NOTE:** \n
         Website ini hanya bisa scraping data pada Google Scholar. Data penulis
         yang dapat diambil hanya 7 penulis. Jika lebih maka sistem akan error.
         \n
+        1️⃣Jangan lupa untuk nama penulis dicek lagi karena ada yang tidak lengkap dan disingkat,
+        mohon diperbaiki dulu sendiri. \n
+        2️⃣Judul juga di cek karena ada judul yang sangat panjang dan tidak lengkap.
+    
+        
         📢 Untuk mengambil seluruh data penelitian lengkap yang lebih dari 20 halaman. Silahkan copy
-        text dibawah ini dan letakkkan dipaling akhir setelah url.  
+        text dibawah ini ⬇️ dan letakkkan dipaling akhir setelah url.  
         """
         )
     
     st.success(
         """
+        ⬇️ copy yang ini ⬇️ \n
         &cstart=0&pagesize=500
         """
         )
     
 
 with st.form("myform"):
-    penulis = st.text_input("Penulis", placeholder="Masukkan Nama Penulis")
-    linkurl = st.text_input("URL", placeholder="Masukkan URL")
+    penulis = st.text_input("✒️ Penulis", placeholder="Masukkan Nama Penulis")
+    linkurl = st.text_input("🔗 URL", placeholder="Masukkan URL")
 
 
     if "scrape_state" not in st.session_state:
         st.session_state.scrape_state = False
     
-    submit_button = st.form_submit_button(label='Submit')
+    submit_button = st.form_submit_button(label='🔍 Scrape')
 
 if submit_button or st.session_state.scrape_state and linkurl != "":
     st.session_state.scrape_state = True
@@ -99,20 +105,23 @@ if submit_button or st.session_state.scrape_state and linkurl != "":
 
         np = reviews.find('div', class_='gs_gray').text
         listnp = np.split(", ")
-        if len(listnp) < 7:
+        if len(listnp) <= 7:
             step = 7 - len(listnp)
             for j in range(step):
                 listnp.append("None")
 
-        for j in range(len(listnp)):
-            data_dict[f'Nama Penulis {j+1}'].append(listnp[j])
+        if len(listnp) <= 7:
+            for j in range(len(listnp)):
+                data_dict[f'Nama Penulis {j+1}'].append(listnp[j])
+        else:
+            for j in range(7):
+                data_dict[f'Nama Penulis {j+1}'].append(listnp[j])
 
     df = pd.DataFrame.from_dict(data_dict, orient='index')
     df = df.transpose()
 
     gd = GridOptionsBuilder.from_dataframe(df)
-    gd.configure_pagination(enabled=True)
-    gd.configure_default_column(editable=True)
+    gd.configure_pagination(enabled=True, paginationPageSize=20)
     gridoption = gd.build()
     AgGrid(df, gridOptions=gridoption)
 
@@ -125,7 +134,7 @@ if submit_button or st.session_state.scrape_state and linkurl != "":
 
     # Tampilkan button download
     st.download_button(
-        label='Download Excel',
+        label='📥 Download Excel',
         data=excel_data,
         file_name=f'{file_name}.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
