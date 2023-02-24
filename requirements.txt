@@ -1,0 +1,9 @@
+streamlit
+streamlit-aggrid
+scikit-learn
+beautifulsoup4
+openpyxl
+httpx
+pandas
+pyperclip
+XlsxWriter
