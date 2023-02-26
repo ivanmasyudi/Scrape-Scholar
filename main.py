@@ -50,7 +50,7 @@ with st.expander("⚠️ Tutorial Penggunaan"):
         """
         ❗️**NOTE:** \n
         Website ini hanya bisa scraping data pada Google Scholar. Data penulis
-        yang dapat diambil hanya 7 penulis. Jika lebih maka sistem akan error.
+        yang dapat diambil hanya 7 penulis. Penulis disini maksudnya penulis yang ada dipaper.
         \n
         1️⃣Jangan lupa untuk nama penulis dicek lagi karena ada yang tidak lengkap dan disingkat,
         mohon diperbaiki dulu sendiri. \n
